@@ -3,7 +3,47 @@ pub use super::errors::{IntegrityKeyGenerationError, MessageDecodeError, Message
 use crate::attribute::StunAttribute;
 use crate::header::StunHeader;
 
-/// STUN message [RFC5389](https://tools.ietf.org/html/rfc5389#section-6)
+/// [STUN message](https://tools.ietf.org/html/rfc5389#section-6).
+///
+/// An example of creating and encoding a STUN binding request:
+///```
+/// // Create a request message
+/// let message = stun_coder::StunMessage::create_request()
+///             .add_attribute(stun_coder::StunAttribute::Software {
+///                 description: String::from("rust-stun-coder"),
+///             })
+///             .add_message_integrity()
+///             .add_fingerprint();
+///
+/// // Encode it into bytes
+/// let encoded_message = message.encode(Some("TEST_PASS")).unwrap();
+///
+/// println!("{:#X?}", encoded_message);
+///
+///```
+///
+/// An example that decodes a sample request with Long-Term Authentication
+/// ```
+/// // Encoded message
+/// let msg_bytes: Vec<u8> = vec![
+///     0x01, 0x01, 0x00, 0x48, 0x21, 0x12, 0xa4, 0x42, 0xb7, 0xe7, 0xa7, 0x01, 0xbc, 0x34,
+///     0xd6, 0x86, 0xfa, 0x87, 0xdf, 0xae, 0x80, 0x22, 0x00, 0x0b, 0x74, 0x65, 0x73, 0x74,
+///     0x20, 0x76, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x00, 0x00, 0x20, 0x00, 0x14, 0x00, 0x02,
+///     0xa1, 0x47, 0x01, 0x13, 0xa9, 0xfa, 0xa5, 0xd3, 0xf1, 0x79, 0xbc, 0x25, 0xf4, 0xb5,
+///     0xbe, 0xd2, 0xb9, 0xd9, 0x00, 0x08, 0x00, 0x14, 0xBD, 0x3, 0x6D, 0x6A, 0x33, 0x17,
+///     0x50, 0xDF, 0xE2, 0xED, 0xC5, 0x8E, 0x64, 0x34, 0x55, 0xCF, 0xF5, 0xC8, 0xE2, 0x64,
+///     0x80, 0x28, 0x00, 0x04, 0x4F, 0x26, 0x02, 0x93,
+/// ];
+///
+/// // Integrity key used for verification
+/// let integrity_key = Some("VOkJxbRl1RmTxUk/WvJxBt");
+///
+/// // Decode the message
+/// let decoded_msg = stun_coder::StunMessage::decode(&msg_bytes, integrity_key).unwrap();
+///
+/// println!("{:?}", decoded_msg);
+///```
+///
 ///
 ///   STUN messages are encoded in binary using network-oriented format
 ///   (most significant byte or octet first, also commonly known as big-
