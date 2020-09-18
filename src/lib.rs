@@ -144,8 +144,10 @@ mod attribute;
 mod definitions;
 mod header;
 mod message;
-mod tests;
 mod utils;
+
+#[cfg(test)]
+mod tests;
 
 pub use attribute::{AttributeDecodeError, AttributeEncodeError, StunAttribute};
 pub use header::{
