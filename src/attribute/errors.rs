@@ -16,8 +16,11 @@ pub enum AttributeDecodeError {
     #[error("Invalid field value: {0}.")]
     InvalidValue(u128),
     /// Unrecognized attribute type value was provided.
-    #[error("Unrecognized attribute type value: {0}.")]
-    UnrecognizedAttributeType(u16),
+    #[error("Unrecognized attribute type value: {attr_type:?}.")]
+    UnrecognizedAttributeType {
+        /// The provided attribute type that was not recognized
+        attr_type: u16,
+    },
 }
 
 /// Attribute decoding errors.

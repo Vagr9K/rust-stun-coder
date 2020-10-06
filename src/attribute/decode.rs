@@ -164,7 +164,9 @@ impl StunAttribute {
         }
 
         let attr_type = FromPrimitive::from_u16(encoded_attr_type).ok_or(
-            AttributeDecodeError::UnrecognizedAttributeType(encoded_attr_type),
+            AttributeDecodeError::UnrecognizedAttributeType {
+                attr_type: encoded_attr_type,
+            },
         )?;
 
         // Decode and return the appropriate variant based on the attribute type.
