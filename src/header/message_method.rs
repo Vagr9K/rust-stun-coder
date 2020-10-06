@@ -1,4 +1,4 @@
-#[derive(Debug, Copy, Clone, FromPrimitive)]
+#[derive(Debug, Copy, Clone, FromPrimitive, Ord, PartialOrd, Eq, PartialEq)]
 /// [STUN message method](https://tools.ietf.org/html/rfc5389#section-18.1)
 ///
 /// A STUN method is a hex number in the range 0x000 - 0xFFF.  The

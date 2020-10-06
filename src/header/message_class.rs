@@ -1,4 +1,4 @@
-#[derive(Debug, Copy, Clone, FromPrimitive)]
+#[derive(Debug, Copy, Clone, FromPrimitive, Ord, PartialOrd, Eq, PartialEq)]
 /// [STUN message class](https://tools.ietf.org/html/rfc5389#section-6)
 ///
 /// The message type defines the message class (request, success response, failure response, or indication).
