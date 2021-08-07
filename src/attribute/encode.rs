@@ -177,34 +177,34 @@ impl StunAttribute {
         let (attr_type, encoded_attr) = match self {
             StunAttribute::XorMappedAddress { socket_addr } => (
                 StunAttributeType::XorMappedAddress,
-                Self::encode_address(&socket_addr, true, transaction_id),
+                Self::encode_address(socket_addr, true, transaction_id),
             ),
             StunAttribute::MappedAddress { socket_addr } => (
                 StunAttributeType::MappedAddress,
-                Self::encode_address(&socket_addr, false, transaction_id),
+                Self::encode_address(socket_addr, false, transaction_id),
             ),
             StunAttribute::Username { value } => (
                 StunAttributeType::Username,
-                Self::encode_utf8_val(&value, Some(513)),
+                Self::encode_utf8_val(value, Some(513)),
             ),
             StunAttribute::MessageIntegrity { key } => {
                 (StunAttributeType::MessageIntegrity, Ok(key.clone()))
             }
             StunAttribute::Software { description } => (
                 StunAttributeType::Software,
-                Self::encode_utf8_val(&description, Some(763)),
+                Self::encode_utf8_val(description, Some(763)),
             ),
             StunAttribute::AlternateServer { socket_addr } => (
                 StunAttributeType::AlternateServer,
-                Self::encode_address(&socket_addr, false, transaction_id),
+                Self::encode_address(socket_addr, false, transaction_id),
             ),
             StunAttribute::Realm { value } => (
                 StunAttributeType::Realm,
-                Self::encode_utf8_val(&value, Some(763)),
+                Self::encode_utf8_val(value, Some(763)),
             ),
             StunAttribute::Nonce { value } => (
                 StunAttributeType::Nonce,
-                Self::encode_utf8_val(&value, Some(763)),
+                Self::encode_utf8_val(value, Some(763)),
             ),
             StunAttribute::Fingerprint { value } => {
                 (StunAttributeType::Fingerprint, Self::encode_u32_val(*value))
@@ -226,7 +226,7 @@ impl StunAttribute {
                 reason,
             } => (
                 StunAttributeType::ErrorCode,
-                Self::encode_error_code(*class, *number, &reason),
+                Self::encode_error_code(*class, *number, reason),
             ),
             StunAttribute::UnknownAttributes { types } => (
                 StunAttributeType::UnknownAttributes,

@@ -86,7 +86,7 @@ pub enum StunAttribute {
     },
     /// [RFC5389: MESSAGE-INTEGRITY](https://tools.ietf.org/html/rfc5389#section-15.4)
     ///
-    /// The MESSAGE-INTEGRITY attribute contains an HMAC-SHA1 [RFC2104] of
+    /// The MESSAGE-INTEGRITY attribute contains an HMAC-SHA1 [RFC2104](https://datatracker.ietf.org/doc/html/rfc2104) of
     /// the STUN message.  The MESSAGE-INTEGRITY attribute can be present in
     /// any STUN message type.  Since it uses the SHA1 hash, the HMAC will be
     /// 20 bytes.  The text used as input to HMAC is the STUN message,
