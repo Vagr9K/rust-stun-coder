@@ -41,7 +41,7 @@ impl StunMessage {
     pub(super) fn calculate_fingerprint(encoded_message: &[u8]) -> u32 {
         let mut crc = crc32::Digest::new(crc32::IEEE);
         crc.write(encoded_message);
-        crc.sum32() ^ 0x5354554e
+        crc.sum32() ^ 0x5354_554e
     }
 
     /// Calculates the integrity key used for generating HMAC according to [RFC5389](https://tools.ietf.org/html/rfc5389#section-15.4)
