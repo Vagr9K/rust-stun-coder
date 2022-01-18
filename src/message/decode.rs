@@ -18,12 +18,10 @@ impl StunMessage {
         bytes: &[u8],
         integrity_password: Option<&str>,
     ) -> Result<Self, MessageDecodeError> {
-        let data_len = bytes.len();
         let mut cursor = Cursor::new(bytes);
 
         // Decode header
         let header = StunHeader::decode(&mut cursor)?;
-
         // Decode attributes
         let mut attributes = Vec::new();
 
@@ -33,7 +31,8 @@ impl StunMessage {
         let mut username = None;
         let mut realm = None;
 
-        while cursor.position() < data_len as u64 {
+        // Message length does not include the 20-byte header.
+        while cursor.position() < 20 + header.message_len as u64 {
             let decoded = StunAttribute::decode(&mut cursor, header.transaction_id);
 
             match decoded {
