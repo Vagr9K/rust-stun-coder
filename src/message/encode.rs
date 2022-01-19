@@ -53,7 +53,7 @@ impl StunMessage {
                     // Check if it contains a placeholder value and replace it with the computed fingerprint
                     if *value == 0 {
                         // Update the encoded message length so the correct fingerprint can be calculated
-                        self.set_message_length(&mut cursor.get_mut(), 8);
+                        self.set_message_length(cursor.get_mut(), 8);
 
                         // Update the fingerprint value
                         let fingerprint = Self::calculate_fingerprint(cursor.get_ref());
@@ -108,7 +108,7 @@ impl StunMessage {
         }
 
         // Update the encoded message length
-        self.set_message_length(&mut cursor.get_mut(), 0);
+        self.set_message_length(cursor.get_mut(), 0);
 
         // Return the encoded data
         Ok(cursor.get_ref().to_vec())
