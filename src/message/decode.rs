@@ -121,11 +121,11 @@ impl StunMessage {
                             // can be ignored by the STUN agent if it does not understand them.
                             // Only return an error when the attribute is comprehension-required
                             if attr_type <= 0x8000 {
-                                return Err(MessageDecodeError::from(err));
+                                return Err(MessageDecodeError::AttributeDecodeFailure{source: err, transaction_id: header.transaction_id});
                             }
                         }
                         // Return an error on any other attribute decoding error
-                        _ => return Err(MessageDecodeError::from(err)),
+                        _ => return Err(MessageDecodeError::AttributeDecodeFailure{source: err, transaction_id: header.transaction_id}),
                     }
                 }
             }
