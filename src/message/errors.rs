@@ -1,4 +1,4 @@
-use crate::{AttributeDecodeError, AttributeEncodeError, HeaderDecodeError, HeaderEncodeError};
+use crate::{AttributeDecodeError, AttributeEncodeError, HeaderDecodeError, HeaderEncodeError, definitions::StunTransactionId};
 use thiserror::Error;
 
 /// Integrity Key Errors
@@ -23,7 +23,13 @@ pub enum MessageDecodeError {
     HeaderDecodeFailure(#[from] HeaderDecodeError),
     /// Failure to decode a STUN attribute
     #[error("Error decoding STUN attribute.")]
-    AttributeDecodeFailure(#[from] AttributeDecodeError),
+    AttributeDecodeFailure {
+        #[source]
+        ///
+        source: AttributeDecodeError,
+        /// STUN transaction id.
+        transaction_id: StunTransactionId
+    },
     /// Failure to generate an integrity verification key
     #[error("Error decoding STUN attribute.")]
     IntegrityKeyGenerationFailure(#[from] IntegrityKeyGenerationError),
